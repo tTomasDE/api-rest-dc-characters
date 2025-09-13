@@ -1,4 +1,4 @@
-import { CharacterModel } from "../models/localhost/character.model.js"
+import { CharacterModel } from "../models/mysql/character.model.js"
 import { validateChar, validatePartialChar } from "../schemas/character.js"
 
 export class CharacterController {
@@ -38,14 +38,16 @@ export class CharacterController {
 
     static async update (req, res) {
         const { id } = req.params
-    
+        console.log(req.body);
         const result = validatePartialChar(req.body)
-    
+        
+
+
         if (result.error) {
             return res.status(400).json({ error: JSON.stringify(result.error.message) })
         }
     
-        const updateChar = await CharacterModel.update(id,result.data)
+        const updateChar = await CharacterModel.update({id,input: result.data})
     
         return res.json(updateChar)
     }

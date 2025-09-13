@@ -1,12 +1,12 @@
 import express from 'express'
 import cors from 'cors'
-import { characterRouter } from '../src/routes/characters.js'
+import { characterRouter } from '../src/routes/character.routes.js'
 
 const app = express()
 
 app.disable('x-powered-by')
 
-const PORT = process.env.PORT ?? 3000
+const PORT = process.env.PORT || 3000
 
 app.use(express.json())
 app.use(cors())
