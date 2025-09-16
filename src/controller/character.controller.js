@@ -3,6 +3,7 @@ import { validateChar, validatePartialChar } from "../schemas/character.js"
 
 export class CharacterController {
 
+    
     static async getAll (req, res) {
         const { power } = req.query
         
@@ -25,13 +26,14 @@ export class CharacterController {
     }
 
     static async create (req, res) {
+        
         const result = validateChar(req.body)
             
         if (result.error) {
             return res.status(400).json({ error: JSON.stringify(result.error.message) })
         }
         
-        const newChar = await CharacterModel.create(result.data)  
+        const newChar = await CharacterModel.create({input: result.data})  
             
         res.status(201).json({ newChar })
     }
@@ -55,7 +57,7 @@ export class CharacterController {
     static async delete (req, res) {
         const { id } = req.params
     
-        const result = await CharacterModel.delete(id)
+        const result = await CharacterModel.delete({id})
 
         if (result === false) {
             return res.status(404).json({ message: 'Character Not Found' })
